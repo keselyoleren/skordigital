@@ -1829,27 +1829,23 @@ function get_data_view_tanding()
 	    ?>
 	    
 
-	    <tr class="text-center">
-			<td style="vertical-align: middle; font-size: 200px; font-weight: bold; color: white;" bgcolor="#FF0000" height="300">
-				<?php 
-				if ($total_nilai_sudut_merah < 10) {
-					echo 0 . $total_nilai_sudut_merah; 
-				} else {
-					echo $total_nilai_sudut_merah; 
-				}
-				?>
-			</td>
-			<td style="vertical-align: middle; " height="100">&nbsp;</td>
-			<td style="vertical-align: middle; font-size: 200px; font-weight: bold; color: white;" bgcolor="#1E90FF" height="300">
-				<?php 
-				if ($total_nilai_sudut_biru < 10) {
-					echo 0 . $total_nilai_sudut_biru; 
-				} else {
-					echo $total_nilai_sudut_biru; 
-				}
-				?>
-			</td>
-    	</tr>
+	    <div class="table-responsive">
+			<table class="table" width="500">
+				<tr class="text-center">
+					<td style="width: 50%; vertical-align: middle; font-size: 200px; font-weight: bold; color: white;" bgcolor="#FF0000" height="350">
+						<?php 
+							echo $total_nilai_sudut_merah; 	
+						?>
+					</td>
+					<td style="vertical-align: middle; " height="100">&nbsp;</td>
+					<td style="width: 50%; vertical-align: middle; font-size: 200px; font-weight: bold; color: white;" bgcolor="#1E90FF" height="350">
+						<?php 
+							echo $total_nilai_sudut_biru; 
+						?>
+					</td>
+				</tr>
+			</table>
+		</div>
     	
 	<?php 
 

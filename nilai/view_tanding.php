@@ -1149,81 +1149,69 @@
 </head>
 <body>
 	<div class="container">
-		<div class="table-responsive">
-			<table class="table">
-				<tr>
-					<td colspan="6" rowspan="3">
-						<h1 class="waktu" style="font-size: 150px">00:00</h1>
-					</td>
-				</tr>
-				<tr class="text-right">
-					<td colspan="5" style="font-size: 28px; font-weight: bold;">GELANGGANG :
-						<?php echo $jadwal['gelanggang']; ?></td>
-				</tr>
-				<tr class="text-right">
-					<td colspan="5" style="font-size: 28px; font-weight: bold;">
-						PARTAI : <?php echo $jadwal['partai']." (" .$jadwal['babak']." )" ; ?>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="6">
-						<h1 class="btn btn-success btn-xs" onclick="init_start()"
-							style="margin-bottom:10px;margin-top:0;"> START</h1>
-						<h1 class="btn btn-warning btn-xs btn-stop" onclick="resume_time()"
-							style="margin-bottom:10px;margin-top:0;"> PAUSE</h1>
-						<h1 class="btn btn-danger btn-xs" onclick="stop_time()"
-							style="margin-bottom:10px;margin-top:0;"> STOP</h1>
-					</td>
-					<td colspan="5" class="text-right" style="font-size: 28px; font-weight:
-						bold;"><?php echo $jadwal['kelas']; ?></td>
-				</tr>
-			</table>
+		
+		<!-- waktu -->
+		<div class="text-center">
+			<h1  style="font-size: 50px;">GELANGGANG : A </h1>
+			<h1  class="waktu" style="font-size: 150px;">00:00</h1>
+			<h1 class="btn btn-success btn-xs" onclick="init_start()"
+				style="margin-bottom:10px;margin-top:0;"> START</h1>
+			<h1 class="btn btn-warning btn-xs btn-stop" onclick="resume_time()"
+				style="margin-bottom:10px;margin-top:0;"> PAUSE</h1>
+			<h1 class="btn btn-danger btn-xs" onclick="stop_time()"
+				style="margin-bottom:10px;margin-top:0;"> STOP</h1>
 		</div>
 
-		<!-- table nilai -->
-		<div class="table-responsive">
-			<table class="table">
-				<tr class="text-center">
-					<td  style="font-size: 16px; font-weight: bold;"><p><?php
-								echo $jadwal['nm_merah']; ?></p></td>
-					<td>&nbsp;</td>
-					<td style="font-size: 16px; font-weight: bold;"><?php
-								echo $jadwal['nm_biru']; ?></td>
-				</tr>
-				<tr class="text-center">
-					<td  style="font-size: 16px; font-weight: bold;"><p><?php
-						echo $jadwal['kontingen_merah']; ?></p></td>
-					<td>&nbsp;</td>
-					<td style="font-size: 16px; font-weight: bold;"><p><?php
-						echo $jadwal['kontingen_biru']; ?></p></td>
-				</tr>
-				<tbody class="content_penilaian">
+		<!-- gelanggang -->
+		<div class="">
+			<div class="row">
+				<div class="col-md-6">
+					<h1  style="font-size: 30px; text-align: left;">Partai : <?php echo $jadwal['partai']." (" .$jadwal['babak']." )" ; ?></h1>
+				</div>
+				<div class="col-md-6">
+					<h1  style="font-size: 30px; text-align: right;"><?php echo $jadwal['kelas']; ?></h1>
+				</div>
+			</div>
+		</div>
+		<hr>
+		
+		<!-- Peserta contingen -->
+		<div>
+			<div class="row">
+				<div class="col-md-4">
+					<h1  style="font-size: 40px; text-align: left;"><?php echo $jadwal['nm_merah']." (" .$jadwal['kontingen_merah']." )";?></h1>
+				</div>
+				<div class="col-md-4">
+					<h1  style="font-size: 50px; text-align: center;">Vs</h1>
+				</div>
+				<div class="col-md-4">
+					<h1  style="font-size: 40px; text-align: right;"><?php echo $jadwal['nm_biru']." (" .$jadwal['kontingen_biru']." )";?></h1>
+				</div>
+			</div>
+		</div>
+		
+		<div class="content_penilaian">
+			<div class="table-responsive">
+				<table class="table" width="500">
 					<tr class="text-center">
-						<td style="vertical-align: middle; font-size: 200px; font-weight: bold; color: white;" bgcolor="#FF0000" height="300">
+						<td style="width: 50%; vertical-align: middle; font-size: 200px; font-weight: bold; color: white;" bgcolor="#FF0000" height="350">
 							<?php 
-							if ($total_nilai_sudut_merah < 10) {
-								echo 0 . $total_nilai_sudut_merah; 
-							} else {
 								echo $total_nilai_sudut_merah; 
-							}
 							?>
 						</td>
 						<td style="vertical-align: middle; " height="100">&nbsp;</td>
-						<td style="vertical-align: middle; font-size: 200px; font-weight: bold; color: white;" bgcolor="#1E90FF" height="300">
+						<td style="width: 50%; vertical-align: middle; font-size: 200px; font-weight: bold; color: white;" bgcolor="#1E90FF" height="350">
 							<?php 
-							if ($total_nilai_sudut_biru < 10) {
-								echo 0 . $total_nilai_sudut_biru; 
-							} else {
 								echo $total_nilai_sudut_biru; 
-							}
 							?>
 						</td>
 					</tr>
-				</tbody>
-			</table>
+				</table>
+			</div>
 		</div>
 
-		<!-- table navigasi -->
+		
+
 		<div class="table-responsive">
 			<table class="table">
 				<tr>
@@ -1262,16 +1250,15 @@
 									echo $id_partai; ?>">
 								<input type="submit" class="btn btn-danger" value="2.
 									SELESAI">
-						</form>
-					</td>
+							</form>
+						</td>
 				</tr>
 			</table>
 		</div>
-	
+		
+		<!-- table nilai -->
+		
 	</div>
-
-
-
 	<script type="text/javascript">
 		setInterval(function(){
 			$.ajax({
@@ -1279,8 +1266,8 @@
 		        data : {'a' : 'get_data_view_tanding', 'id_partai': <?=$_GET["id_partai"]?>},
 		        type: "GET",
 		        success: function(obj){
-
 		        	$('.content_penilaian').html(obj);
+	
 		        	console.log('Request ... Done');
 		        }
 		    });
