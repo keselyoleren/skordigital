@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="noindex">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="table-responsive">
+			<table class="table">
+				<tr>
+					<td colspan="6" rowspan="3">
+						<h1 class="waktu" style="font-size: 50px">00:00</h1>
+					</td>
+				</tr>
+				<tr class="text-right">
+					<td colspan="5" style="font-size: 28px; font-weight: bold;">GELANGGANG :
+						<?php echo $jadwal['gelanggang']; ?></td>
+				</tr>
+				<tr class="text-right">
+					<td colspan="5" style="font-size: 28px; font-weight: bold;">
+						PARTAI : <?php echo $jadwal['partai']." (" .$jadwal['babak']." )" ; ?>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="6">
+						<h1 class="btn btn-success btn-xs" onclick="init_start()"
+							style="margin-bottom:10px;margin-top:0;"> START</h1>
+						<h1 class="btn btn-warning btn-xs btn-stop" onclick="resume_time()"
+							style="margin-bottom:10px;margin-top:0;"> PAUSE</h1>
+						<h1 class="btn btn-danger btn-xs" onclick="stop_time()"
+							style="margin-bottom:10px;margin-top:0;"> STOP</h1>
+					</td>
+					<td colspan="5" class="text-right" style="font-size: 28px; font-weight:
+						bold;"><?php echo $jadwal['kelas']; ?></td>
+				</tr>
+				
+			</table>
+		</div>
+
+		<div class="table-responsive">
+			<table class="table">
+				<tr>
+					<td class="text-left">
+						<a href="index.php" class="btn btn-warning" role="button">KEMBALI</a>
+					</td>
+
+					<td class="text-center">
+						<input type="button" class="btn btn-info" value="1. RELOAD"
+							onclick="history.go(0)" />
+					</td>
+
+					<td class="text-right">
+						<form name="SetorNilai" id="SetorNilai" method="POST"
+							action="setor_nilai.php" onclick="return cek_selesai();">
+							<?php
+								if($skorakhirmerah> $skorakhirbiru) {
+								$pemenang = $jadwal['nm_merah']."
+								(".$jadwal['kontingen_merah'].")";
+								} else {
+								$pemenang = $jadwal['nm_biru']."
+								(".$jadwal['kontingen_biru'].")";
+								}
+								//echo $skorakhirmerah;
+								//echo $skorakhirbiru;
+								//echo $pemenang;
+
+								?>
+								<input type="hidden" name="skorakhirmerah" id="skorakhirmerah"
+									value="<?php echo $skorakhirmerah; ?>">
+								<input type="hidden" name="skorakhirbiru" id="skorakhirbiru"
+									value="<?php echo $skorakhirbiru; ?>">
+								<input type="hidden" name="pemenang" id="pemenang" value="<?php
+									echo $pemenang; ?>">
+								<input type="hidden" name="id_partai" id="id_partai" value="<?php
+									echo $id_partai; ?>">
+								<input type="submit" class="btn btn-danger" value="2.
+									SELESAI">
+							</form>
+						</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- table nilai -->
+		<div class="table-responsive">
+			<table class="table" width="500">
+				<tr class="text-center">
+					<td  style="font-size: 16px; font-weight: bold;"><p><?php
+								echo $jadwal['nm_merah']; ?></p></td>
+					<td>&nbsp;</td>
+					<td style="font-size: 16px; font-weight: bold;"><?php
+								echo $jadwal['nm_biru']; ?></td>
+				</tr>
+				<tr class="text-center">
+					<td  style="font-size: 16px; font-weight: bold;"><p><?php
+						echo $jadwal['kontingen_merah']; ?></p></td>
+					<td>&nbsp;</td>
+					<td style="font-size: 16px; font-weight: bold;"><p><?php
+						echo $jadwal['kontingen_biru']; ?></p></td>
+				</tr>
+				
+				<tr class="text-center">
+					<td style="vertical-align: middle; font-size: 200px; font-weight: bold; color: white;" bgcolor="#FF0000" height="300">
+						<?php echo $total_nilai_sudut_merah; ?>
+					</td>
+					<td style="vertical-align: middle; " height="100">&nbsp;</td>
+					<td style="vertical-align: middle; font-size: 200px; font-weight: bold; color: white;" bgcolor="#1E90FF" height="300">
+						<?php echo $total_nilai_sudut_biru; ?>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		// setInterval(function(){
+		// 	$.ajax({
+		//         url: 'http://localhost:8888/nilai/api.php', 
+		//         data : {'a' : 'get_data_view_tanding', 'id_partai': <?=$_GET["id_partai"]?>},
+		//         type: "GET",
+		//         success: function(obj){
+		//         	$('.content_penilaian').html(obj);
+	
+		//         	console.log('Request ... Done');
+		//         }
+		//     });
+		// }, 2000);
+	
+		var var_start_timer = true;
+		var var_stop = false;
+		var interval= "";
+		var resume_time = function(){
+			if(var_stop)
+			{
+				return false;
+			}
+			if(var_start_timer)
+			{
+				$('.btn-stop').html(' RESUME');
+				var_start_timer = false;
+			}
+			else
+			{
+				var_start_timer = true;
+				$('.btn-stop').html(' PAUSE');
+			}
+		}
+		function stop_time()
+		{	
+			var_stop = true;
+			$(".waktu").html("00:00");
+			clearInterval(interval);
+		}
+		function init_start()
+		{
+			clearInterval(interval);
+			var duration = 60 * 1.5; // 2 Menit         
+			var_stop = false;
+			var_start_timer = true;
+	
+			start_time(duration)	
+		}
+		function start_time(duration) 
+		{
+			var timer = duration, minutes, seconds;
+	
+			interval = setInterval(function () {
+				if(var_stop)
+				{
+					return false;
+				}
+	
+				if(var_start_timer == false)
+				{
+					return false;
+				}
+	
+				minutes = parseInt(timer / 60, 10)
+				seconds = parseInt(timer % 60, 10);
+	
+				minutes = minutes < 10 ? "0" + minutes : minutes;
+				seconds = seconds < 10 ? "0" + seconds : seconds;
+	
+				if (--timer < 0) {
+					var_stop = true;
+					$(".waktu").html("WAKTU HABIS");
+					clearInterval(interval);
+				}
+				else
+				{
+					$(".waktu").html(minutes + ":" + seconds);
+				}
+			}, 1000);
+		}
+	
+	</script>
+	<!-- SELESAI Confirm Function -->
+	<script>
+		function cek_selesai()
+		{
+			if(confirm('Apakah Anda Yakin Pertandingan Sudah Berakhir?')){
+				return true;
+			} else {
+				return false;
+			}
+		}
+	</script>
+</body>
+</html>
